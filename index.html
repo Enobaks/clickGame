@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .wrap {
+            width: 100%;
+            height: 100vh;
+        }
+        .game-wrap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .click_object {
+            width: 10%;
+            height: 7rem;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div>
+            <h3>Game Score</h3>
+            <p>Score:<span class="score"></span></p>
+            <div class="button-wrap">
+                <button class="btn start">Start</button>
+                <button class="btn reset">Reset</button>
+                <button class="btn stop">Stop</button>
+            </div>
+        </div>
+        <div class="game-wrap">
+            <div class="click_object"></div>
+        </div>
+    </div>
+    <script>
+        let rootElement = document.querySelector('.click_object');
+        let startButton = document.querySelector('.reset');
+        let resetButton = document.querySelector('.reset');
+        let stopButton = document.querySelector('.stop');
+        let score = document.querySelector('.score');
+        score.innerHTML = 0;
+        let sum = 0;
+       
+        // Display element after every 3 seconds
+        function myFunction() {
+            let randomNumberY = Math.floor(Math.random() * 23 + 1)
+            let randomNumberX = Math.floor(Math.random() * 53 + 1)
+            rootElement.style.top = randomNumberY + 'rem';
+            rootElement.style.right = randomNumberX + 'rem';
+        }
+
+        function scoreIncrement() {
+            sum += 10
+            score.innerHTML = sum
+            if (sum >= 100) {
+                clearInterval(blink);
+                setInterval(myFunction, 1000);
+            }
+            console.log('clicked')
+        }
+
+// Not working yet
+        function reset() {
+            sum = 0;
+            clearInterval(increasedBlink);
+            clearInterval(blink);
+            setInterval(myFunction, 2000);
+            console.log('reset clicked')
+        }
+        function stopGame() {
+            clearInterval(blink);
+            clearInterval(increasedBlink);
+            console.log('stop clicked')
+        }
+
+        
+        const blink = setInterval(myFunction, 2000)
+        const increasedBlink = setInterval(myFunction, 1000);
+
+        startButton.addEventListener('click', myFunction)
+        rootElement.addEventListener('click', scoreIncrement)
+        resetButton.addEventListener('click', reset)
+        stopButton.addEventListener('click', stopGame)
+    </script>
+</body>
+</html>
