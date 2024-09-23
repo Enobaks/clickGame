@@ -32,11 +32,11 @@
         <div>
             <h3>Game Score</h3>
             <p>Score:<span class="score"></span></p>
-            <div class="button-wrap">
+            <!-- <div class="button-wrap">
                 <button class="btn start">Start</button>
                 <button class="btn reset">Reset</button>
-                <button class="btn stop">Stop</button>
-            </div>
+                <button id="demo" class="btn stop">Stop</button>
+            </div> -->
         </div>
         <div class="game-wrap">
             <div class="click_object"></div>
@@ -48,49 +48,57 @@
         let resetButton = document.querySelector('.reset');
         let stopButton = document.querySelector('.stop');
         let score = document.querySelector('.score');
+        let blink = null;
         score.innerHTML = 0;
         let sum = 0;
+        
        
-        // Display element after every 3 seconds
-        function myFunction() {
-            let randomNumberY = Math.floor(Math.random() * 23 + 1)
-            let randomNumberX = Math.floor(Math.random() * 53 + 1)
-            rootElement.style.top = randomNumberY + 'rem';
-            rootElement.style.right = randomNumberX + 'rem';
+        
+        function startFunction() {
+            blink = setInterval(() => {
+                let randomNumberY = Math.floor(Math.random() * 23 + 1)
+                let randomNumberX = Math.floor(Math.random() * 53 + 1)
+                rootElement.style.top = randomNumberY + 'rem';
+                rootElement.style.right = randomNumberX + 'rem';
+            }, 3000)
+            
+
         }
 
         function scoreIncrement() {
             sum += 10
             score.innerHTML = sum
             if (sum >= 100) {
-                clearInterval(blink);
-                setInterval(myFunction, 1000);
+                setInterval(startFunction, 1000);
+                blink = null
             }
+            clearInterval(blink);
             console.log('clicked')
         }
 
 // Not working yet
-        function reset() {
-            sum = 0;
-            clearInterval(increasedBlink);
-            clearInterval(blink);
-            setInterval(myFunction, 2000);
-            console.log('reset clicked')
-        }
-        function stopGame() {
-            clearInterval(blink);
-            clearInterval(increasedBlink);
-            console.log('stop clicked')
-        }
+        // function reset() {
+        //     score.innerText = 0
+        //     clearInterval(increasedBlink);
+        //     clearInterval(blink);
+        //     setInterval(startFunction, 2000);
+        //     console.log('reset clicked')
+        // }
+        // function stopGame() {
+        //     clearInterval(blink);
+        //     clearInterval(increasedBlink);
+        //     console.log('stop clicked')
+        // }
 
+        // const increasedBlink = setInterval(startFunction, 1000);
         
-        const blink = setInterval(myFunction, 2000)
-        const increasedBlink = setInterval(myFunction, 1000);
+        // startButton.addEventListener('click', startFunction)
+        // resetButton.addEventListener('click', reset)
+        // stopButton.addEventListener('click', stopGame)
 
-        startButton.addEventListener('click', myFunction)
+        // Display element after every 3 seconds
+        
         rootElement.addEventListener('click', scoreIncrement)
-        resetButton.addEventListener('click', reset)
-        stopButton.addEventListener('click', stopGame)
     </script>
 </body>
 </html>
